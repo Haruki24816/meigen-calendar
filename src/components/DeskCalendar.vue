@@ -2,23 +2,23 @@
 import { ref } from "vue"
 import hsl from "hsl-to-hex"
 
-const ruledLine = ref("block")
-
+const ruledLine = ref("none")
 const font = ref("Shippori Mincho")
-
 const color = Math.random() * 360
 const colorDark = ref(hsl(color, 56, 31))
 const colorLight = ref(hsl(color, 50, 92))
 const colorGray = ref(hsl(color, 39, 67))
 
-const miomeigen = ref("名言\n名言")
-const meigenFontSize = ref("5mm")
-const meigenLineHeight = ref("10mm")
+const miomeigen = ref("名言")
+const meigenFontSize = ref("8mm")
+const meigenLineHeight = ref("8mm")
 
-const lastMonthDates = ref([...Array(5)].map((_, i) => i + 25))
+const month = ref("01")
+const year = ref("2024")
+const lastMonthDates = ref([...Array(1)].map((_, i) => i + 31))
 const dates = ref([...Array(31)].map((_, i) => i + 1))
-const NextMonthDates = ref([...Array(6)].map((_, i) => i + 1))
-const holidays = ref([20])
+const NextMonthDates = ref([...Array(3)].map((_, i) => i + 1))
+const holidays = ref([1, 6, 8])
 </script>
 
 <template>
@@ -33,6 +33,10 @@ const holidays = ref([20])
       </div>
       <div class="calendar">
         <div class="calendarContainer">
+          <div class="calendarHeader">
+            <span class="month">{{ month }}</span>
+            <span class="year">{{ " / " + year }}</span>
+          </div>
           <div class="week">
             <div>日</div>
             <div>月</div>
@@ -147,6 +151,20 @@ const holidays = ref([20])
   align-items: center;
 }
 
+.calendarHeader {
+  margin-bottom: 5mm;
+  color: v-bind(colorDark);
+  letter-spacing: 0.7mm;
+}
+
+.month {
+  font-size: 7mm;
+}
+
+.year {
+  font-size: 4mm;
+}
+
 .week {
   display: flex;
   justify-content: space-between;
@@ -154,11 +172,11 @@ const holidays = ref([20])
   border-bottom: 0.3pt v-bind(colorDark) solid;
   width: 55mm;
   padding-top: 0.7mm;
-  padding-bottom: 0.7mm;
-  margin-bottom: 2mm;
+  padding-bottom: 0.9mm;
+  margin-bottom: 2.8mm;
 }
 
-.week > div {
+.week>div {
   font-size: 2.5mm;
   width: 7mm;
   text-align: center;
@@ -178,10 +196,10 @@ const holidays = ref([20])
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 7mm;
-  height: 7mm;
+  width: 6mm;
+  height: 6mm;
   font-size: 3.5mm;
-  margin-bottom: 0.5mm;
+  margin: 0.5mm 0.5mm 1.8mm 0.5mm;
 }
 
 .holiday {
