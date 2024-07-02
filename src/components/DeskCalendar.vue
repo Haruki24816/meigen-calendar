@@ -3,7 +3,7 @@ import { ref } from "vue"
 import hsl from "hsl-to-hex"
 
 const ruledLine = ref("none")
-const font = ref("Shippori Mincho")
+const font = ref("Shippori Mincho") // "RocknRoll One", "Zen Antique Soft", "Sawarabi Gothic", "Klee One", "Zen Old Mincho", "Shippori Mincho", "Sawarabi Mincho", "Noto Serif JP"
 const color = Math.random() * 360
 const colorDark = ref(hsl(color, 56, 31))
 const colorLight = ref(hsl(color, 50, 92))
