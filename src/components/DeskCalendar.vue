@@ -1,35 +1,46 @@
 <script setup>
 import { ref } from "vue"
 import hsl from "hsl-to-hex"
+import { calendar } from "../calendar"
 
-const ruledLine = ref("none")
-const font = ref("Shippori Mincho") // "RocknRoll One", "Zen Antique Soft", "Sawarabi Gothic", "Klee One", "Zen Old Mincho", "Shippori Mincho", "Sawarabi Mincho", "Noto Serif JP"
-const color = Math.random() * 360
+const props = defineProps(["data"])
+
+const printMode = props.data.printMode
+const font = props.data.font
+const color = props.data.color
 const colorDark = ref(hsl(color, 56, 31))
 const colorLight = ref(hsl(color, 50, 92))
 const colorGray = ref(hsl(color, 39, 67))
 
-const miomeigen = ref("名言")
-const meigenFontSize = ref("8mm")
-const meigenLineHeight = ref("8mm")
+// あとは写真だけ
 
-const month = ref("01")
-const year = ref("2024")
-const lastMonthDates = ref([...Array(1)].map((_, i) => i + 31))
-const dates = ref([...Array(31)].map((_, i) => i + 1))
-const NextMonthDates = ref([...Array(3)].map((_, i) => i + 1))
-const holidays = ref([1, 6, 8])
+const meigenText = props.data.meigenText
+const meigenFontSize = props.data.meigenFontSize + "mm"
+const meigenLineHeight = props.data.meigenLineHeight + "mm"
+
+const month = String(props.data.month).padStart(2, "0")
+const year = props.data.year
+const lastMonthDates = ref(calendar.lastMonthDates(props.data.year, props.data.month))
+const dates = ref(calendar.currentMonthDates(props.data.year, props.data.month))
+const NextMonthDates = ref(calendar.nextMonthDates(props.data.year, props.data.month))
+const holidays = props.data.holidays
 </script>
 
 <template>
   <div class="container">
-    <div class="box1"></div>
-    <div class="box2"></div>
+    <div v-if="printMode" class="box1"></div>
+    <div v-else class="box1 whiteBox"></div>
+    <div v-if="printMode" class="box2"></div>
+    <div v-else class="box2 whiteBox"></div>
+    <div v-if="printMode" class="box3"></div>
+    <div v-else class="box3 whiteBox"></div>
+    <div v-if="printMode" class="box4"></div>
+    <div v-else class="box4 whiteBox"></div>
     <div class="contents">
       <div class="image">
       </div>
       <div class="meigen">
-        <pre class="meigenContent">{{ miomeigen }}</pre>
+        <pre class="meigenContent">{{ meigenText }}</pre>
       </div>
       <div class="calendar">
         <div class="calendarContainer">
@@ -65,43 +76,12 @@ const holidays = ref([1, 6, 8])
         </div>
       </div>
     </div>
-    <div class="box3"></div>
   </div>
 </template>
 
 <style scoped>
 .container {
   font-family: v-bind(font);
-}
-
-.box1 {
-  width: 200mm;
-  height: 80mm;
-  position: absolute;
-  top: 10mm;
-  left: 0;
-  border-top: 0.3pt black solid;
-  border-bottom: 0.3pt black solid;
-}
-
-.box2 {
-  width: 180mm;
-  height: 100mm;
-  position: absolute;
-  top: 0;
-  left: 10mm;
-  border-left: 0.3pt black solid;
-  border-right: 0.3pt black solid;
-}
-
-.box3 {
-  width: 180mm;
-  height: 80mm;
-  position: absolute;
-  top: 10mm;
-  left: 10mm;
-  border: 0.3pt black solid;
-  display: v-bind(ruledLine);
 }
 
 .contents {
@@ -213,5 +193,47 @@ const holidays = ref([1, 6, 8])
 
 .date>div {
   margin-bottom: 0.4mm;
+}
+
+.box1 {
+  width: 200mm;
+  height: 10mm;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 0.3pt black solid;
+}
+
+.box2 {
+  width: 10mm;
+  height: 100mm;
+  position: absolute;
+  top: 0;
+  left: 190mm;
+  border-left: 0.3pt black solid;
+}
+
+.box3 {
+  width: 200mm;
+  height: 10mm;
+  position: absolute;
+  top: 90mm;
+  left: 0;
+  border-top: 0.3pt black solid;
+}
+
+.box4 {
+  width: 10mm;
+  height: 100mm;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-right: 0.3pt black solid;
+}
+
+.whiteBox {
+  background-color: white;
+  border: 0;
+  z-index: 1000;
 }
 </style>
