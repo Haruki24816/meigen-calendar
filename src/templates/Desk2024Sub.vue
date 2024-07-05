@@ -1,29 +1,27 @@
 <script setup>
 import { ref } from "vue"
 import hsl from "hsl-to-hex"
-import { calendar } from "../calendar"
+import { calendar } from "../modules/calendar"
 
-const props = defineProps(["data"])
+const props = defineProps(["generalData", "sectionData", "month"])
 
-const printMode = props.data.printMode
-const font = props.data.font
-const color = props.data.color
+const printMode = props.generalData.tonbo
+const font = props.generalData.font
+const color = props.sectionData.color
 const colorDark = ref(hsl(color, 56, 31))
 const colorLight = ref(hsl(color, 50, 92))
 const colorGray = ref(hsl(color, 39, 67))
 
-// あとは写真だけ
+const meigenText = props.sectionData.meigenText
+const meigenFontSize = props.sectionData.meigenFontSize + "mm"
+const meigenLineHeight = props.sectionData.meigenLineHeight + "mm"
 
-const meigenText = props.data.meigenText
-const meigenFontSize = props.data.meigenFontSize + "mm"
-const meigenLineHeight = props.data.meigenLineHeight + "mm"
-
-const month = String(props.data.month).padStart(2, "0")
-const year = props.data.year
-const lastMonthDates = ref(calendar.lastMonthDates(props.data.year, props.data.month))
-const dates = ref(calendar.currentMonthDates(props.data.year, props.data.month))
-const NextMonthDates = ref(calendar.nextMonthDates(props.data.year, props.data.month))
-const holidays = props.data.holidays
+const month = String(props.month).padStart(2, "0")
+const year = props.generalData.year
+const lastMonthDates = ref(calendar.lastMonthDates(props.generalData.year, props.month))
+const dates = ref(calendar.currentMonthDates(props.generalData.year, props.month))
+const NextMonthDates = ref(calendar.nextMonthDates(props.generalData.year, props.month))
+const holidays = props.sectionData.holidays
 </script>
 
 <template>

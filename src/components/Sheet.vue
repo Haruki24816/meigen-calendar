@@ -29,5 +29,12 @@ const sheetHeight = ref({
   background-color: white;
   width: v-bind(sheetWidth);
   height: v-bind(sheetHeight);
+  padding: 10mm;
+}
+
+@media print {
+  .sheet {
+    padding: 0;
+  }
 }
 </style>
