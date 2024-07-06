@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue"
+import { ref } from "vue"
 
 const props = defineProps(["defaultData"])
 const sectionIds = ref(Object.keys(props.defaultData.sections))
@@ -11,7 +11,7 @@ data.value = props.defaultData
 <template>
   <template v-for="sectionId in sectionIds">
     ■{{ sectionId }}
-    <component v-for="(key, value) in props.defaultData.sections[sectionId].sectionData" :is="'Form' + value.formType"
+    <component v-for="(value, key) in props.defaultData.sections[sectionId].sectionData" :is="value.formType"
       :name="value.formName" :args="value.formArgs" :defaultData="value.defaultData"
       v-model="data.sections[sectionId].sectionData[key]" />
   </template>

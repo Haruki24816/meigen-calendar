@@ -5,7 +5,7 @@ import { calendar } from "../modules/calendar"
 
 const props = defineProps(["generalData", "sectionData", "month"])
 
-const printMode = props.generalData.tonbo
+const printMode = !(props.generalData.tonbo)
 const font = props.generalData.font
 const color = props.sectionData.color
 const colorDark = ref(hsl(color, 56, 31))
@@ -80,6 +80,9 @@ const holidays = props.sectionData.holidays
 <style scoped>
 .container {
   font-family: v-bind(font);
+  position: relative;
+  width: 200mm;
+  height: 100mm;
 }
 
 .contents {
