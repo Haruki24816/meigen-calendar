@@ -10,7 +10,7 @@ const defaultSectionData = {
   meigenText: { formName: "名言", formType: FormTextarea, formArgs: {}, data: "名言" },
   meigenFontSize: { formName: "名言文字サイズ", formType: FormRange, formArgs: { min: 0.1, max: 40, step: 0.1 }, data: 8 },
   meigenLineHeight: { formName: "名言行間", formType: FormRange, formArgs: { min: 0.1, max: 40, step: 0.1 }, data: 8 },
-  holidays: { formName: "祝日", formType: FormList, formArgs: {}, data: [] }
+  holidays: { formName: "祝日", formType: FormList, formArgs: {}, data: [1,4] }
 }
 
 const desk2024DefaultData = {

@@ -83,6 +83,7 @@ const holidays = props.sectionData.holidays.data
   position: relative;
   width: 200mm;
   height: 100mm;
+  line-height: 1;
 }
 
 .contents {
@@ -115,6 +116,7 @@ const holidays = props.sectionData.holidays.data
   color: white;
   font-size: v-bind(meigenFontSize);
   line-height: v-bind(meigenLineHeight);
+  font-family: v-bind(font);
 }
 
 .calendar {
