@@ -5,23 +5,23 @@ import { calendar } from "../modules/calendar"
 
 const props = defineProps(["generalData", "sectionData", "month"])
 
-const printMode = !(props.generalData.tonbo)
-const font = props.generalData.font
-const color = props.sectionData.color
+const printMode = !(props.generalData.tonbo.data)
+const font = props.generalData.font.data
+const color = props.sectionData.color.data
 const colorDark = ref(hsl(color, 56, 31))
 const colorLight = ref(hsl(color, 50, 92))
 const colorGray = ref(hsl(color, 39, 67))
 
-const meigenText = props.sectionData.meigenText
-const meigenFontSize = props.sectionData.meigenFontSize + "mm"
-const meigenLineHeight = props.sectionData.meigenLineHeight + "mm"
+const meigenText = props.sectionData.meigenText.data
+const meigenFontSize = props.sectionData.meigenFontSize.data + "mm"
+const meigenLineHeight = props.sectionData.meigenLineHeight.data + "mm"
 
 const month = String(props.month).padStart(2, "0")
-const year = props.generalData.year
-const lastMonthDates = ref(calendar.lastMonthDates(props.generalData.year, props.month))
-const dates = ref(calendar.currentMonthDates(props.generalData.year, props.month))
-const NextMonthDates = ref(calendar.nextMonthDates(props.generalData.year, props.month))
-const holidays = props.sectionData.holidays
+const year = props.generalData.year.data
+const lastMonthDates = ref(calendar.lastMonthDates(props.generalData.year.data, props.month))
+const dates = ref(calendar.currentMonthDates(props.generalData.year.data, props.month))
+const NextMonthDates = ref(calendar.nextMonthDates(props.generalData.year.data, props.month))
+const holidays = props.sectionData.holidays.data
 </script>
 
 <template>

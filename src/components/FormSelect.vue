@@ -5,5 +5,5 @@ data.value = props.defaultData
 </script>
 
 <template>
-  セレクト「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」
+  <div>セレクト「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」</div>
 </template>

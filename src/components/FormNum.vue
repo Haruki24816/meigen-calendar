@@ -5,5 +5,5 @@ data.value = props.defaultData
 </script>
 
 <template>
-  ナンバー「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」
+  <div>ナンバー「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」</div>
 </template>

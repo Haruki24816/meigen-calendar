@@ -5,5 +5,5 @@ data.value = props.defaultData
 </script>
 
 <template>
-  テキストエリア「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」
+  <div>テキストエリア「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」</div>
 </template>

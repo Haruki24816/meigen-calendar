@@ -5,38 +5,40 @@ const props = defineProps(["data"])
 </script>
 
 <template>
-  <div class="sheet">
-    <Desk2024Sub id="desk20241" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20241'].sectionData" :month="1" />
-    <Desk2024Sub id="desk20242" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20242'].sectionData" :month="2" />
-    <Desk2024Sub id="desk20243" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20243'].sectionData" :month="3" />
-  </div>
-  <div class="sheet">
-    <Desk2024Sub id="desk20249" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20249'].sectionData" :month="9" />
-    <Desk2024Sub id="desk20248" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20248'].sectionData" :month="8" />
-    <Desk2024Sub id="desk20247" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20247'].sectionData" :month="7" />
-  </div>
-  <div class="sheet">
-    <Desk2024Sub id="desk20244" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20244'].sectionData" :month="4" />
-    <Desk2024Sub id="desk20245" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20245'].sectionData" :month="5" />
-    <Desk2024Sub id="desk20246" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk20246'].sectionData" :month="6" />
-  </div>
-  <div class="sheet">
-    <Desk2024Sub id="desk202412" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk202412'].sectionData" :month="12" />
-    <Desk2024Sub id="desk202411" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk202411'].sectionData" :month="11" />
-    <Desk2024Sub id="desk202410" :generalData="props.data.sections['general'].sectionData"
-      :sectionData="props.data.sections['desk202410'].sectionData" :month="10" />
-  </div>
+  <template v-if="props.data != null">
+    <div class="sheet">
+      <Desk2024Sub id="desk20241" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20241'].sectionData" :month="1" />
+      <Desk2024Sub id="desk20242" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20242'].sectionData" :month="2" />
+      <Desk2024Sub id="desk20243" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20243'].sectionData" :month="3" />
+    </div>
+    <div class="sheet">
+      <Desk2024Sub id="desk20249" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20249'].sectionData" :month="9" />
+      <Desk2024Sub id="desk20248" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20248'].sectionData" :month="8" />
+      <Desk2024Sub id="desk20247" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20247'].sectionData" :month="7" />
+    </div>
+    <div class="sheet">
+      <Desk2024Sub id="desk20244" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20244'].sectionData" :month="4" />
+      <Desk2024Sub id="desk20245" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20245'].sectionData" :month="5" />
+      <Desk2024Sub id="desk20246" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk20246'].sectionData" :month="6" />
+    </div>
+    <div class="sheet">
+      <Desk2024Sub id="desk202412" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk202412'].sectionData" :month="12" />
+      <Desk2024Sub id="desk202411" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk202411'].sectionData" :month="11" />
+      <Desk2024Sub id="desk202410" :generalData="props.data.sections['general'].sectionData"
+        :sectionData="props.data.sections['desk202410'].sectionData" :month="10" />
+    </div>
+  </template>
 </template>
 
 <style scoped>
@@ -47,10 +49,6 @@ const props = defineProps(["data"])
   margin: 10mm;
   display: flex;
   flex-direction: column;
-}
-
-.sheet > div {
-
 }
 
 @media print {

@@ -5,5 +5,5 @@ data.value = props.defaultData
 </script>
 
 <template>
-  レンジ「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」
+  <div>レンジ「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」</div>
 </template>

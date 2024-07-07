@@ -6,11 +6,11 @@ import FormSelect from "../components/FormSelect.vue"
 import FormTextarea from "../components/FormTextarea.vue"
 
 const defaultSectionData = {
-  color: { formName: "色", formType: FormRange, formArgs: { min: 0, max: 359, step: 1 }, defaultData: 0 },
-  meigenText: { formName: "名言", formType: FormTextarea, formArgs: {}, defaultData: "名言" },
-  meigenFontSize: { formName: "名言文字サイズ", formType: FormRange, formArgs: { min: 0.1, max: 40, step: 0.1 }, defaultData: 8 },
-  meigenLineHeight: { formName: "名言行間", formType: FormRange, formArgs: { min: 0.1, max: 40, step: 0.1 }, defaultData: 8 },
-  holidays: { formName: "祝日", formType: FormList, formArgs: {}, defaultData: [] }
+  color: { formName: "色", formType: FormRange, formArgs: { min: 0, max: 359, step: 1 }, data: 0 },
+  meigenText: { formName: "名言", formType: FormTextarea, formArgs: {}, data: "名言" },
+  meigenFontSize: { formName: "名言文字サイズ", formType: FormRange, formArgs: { min: 0.1, max: 40, step: 0.1 }, data: 8 },
+  meigenLineHeight: { formName: "名言行間", formType: FormRange, formArgs: { min: 0.1, max: 40, step: 0.1 }, data: 8 },
+  holidays: { formName: "祝日", formType: FormList, formArgs: {}, data: [] }
 }
 
 const desk2024DefaultData = {
@@ -21,9 +21,9 @@ const desk2024DefaultData = {
       sectionName: "共通データ",
       autoScroll: false,
       sectionData: {
-        tonbo: { formName: "トンボ", formType: FormBool, formArgs: {}, defaultData: false },
-        font: { formName: "フォント", formType: FormSelect, formArgs: { items: ["RocknRoll One", "Zen Antique Soft", "Sawarabi Gothic", "Klee One", "Zen Old Mincho", "Shippori Mincho", "Sawarabi Mincho", "Noto Serif JP"] }, defaultData: "Shippori Mincho" },
-        year: { formName: "年", formType: FormNum, formArgs: {}, defaultData: 2024 }
+        tonbo: { formName: "トンボ", formType: FormBool, formArgs: {}, data: false },
+        font: { formName: "フォント", formType: FormSelect, formArgs: { items: ["RocknRoll One", "Zen Antique Soft", "Sawarabi Gothic", "Klee One", "Zen Old Mincho", "Shippori Mincho", "Sawarabi Mincho", "Noto Serif JP"] }, data: "Shippori Mincho" },
+        year: { formName: "年", formType: FormNum, formArgs: {}, data: 2024 }
       }
     },
     "desk20241": {
