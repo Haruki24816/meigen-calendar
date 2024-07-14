@@ -25,7 +25,7 @@ const holidays = props.sectionData.holidays.data
 </script>
 
 <template>
-  <div class="container">
+  <div class="containerBox">
     <div v-if="printMode" class="box1"></div>
     <div v-else class="box1 whiteBox"></div>
     <div v-if="printMode" class="box2"></div>
@@ -78,25 +78,25 @@ const holidays = props.sectionData.holidays.data
 </template>
 
 <style scoped>
-.container {
+.containerBox {
   font-family: v-bind(font);
   position: relative;
   width: 200mm;
-  height: 100mm;
+  height: 92mm;
   line-height: 1;
 }
 
 .contents {
   width: 190mm;
-  height: 90mm;
+  height: 86mm;
   position: absolute;
-  top: 5mm;
+  top: 3mm;
   left: 5mm;
   display: flex;
 }
 
 .contents>div {
-  height: 90mm;
+  height: 86mm;
 }
 
 .image {
@@ -200,7 +200,7 @@ const holidays = props.sectionData.holidays.data
 
 .box1 {
   width: 200mm;
-  height: 10mm;
+  height: 6mm;
   position: absolute;
   top: 0;
   left: 0;
@@ -209,7 +209,7 @@ const holidays = props.sectionData.holidays.data
 
 .box2 {
   width: 10mm;
-  height: 100mm;
+  height: 92mm;
   position: absolute;
   top: 0;
   left: 190mm;
@@ -218,16 +218,16 @@ const holidays = props.sectionData.holidays.data
 
 .box3 {
   width: 200mm;
-  height: 10mm;
+  height: 6mm;
   position: absolute;
-  top: 90mm;
+  top: 86mm;
   left: 0;
   border-top: 0.3pt black solid;
 }
 
 .box4 {
   width: 10mm;
-  height: 100mm;
+  height: 92mm;
   position: absolute;
   top: 0;
   left: 0;

@@ -49,11 +49,24 @@ const props = defineProps(["data"])
   margin: 10mm;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  padding-top: 5mm;
+  padding-bottom: 5mm;
 }
 
 @media print {
   .sheet {
     margin: 0;
+    box-shadow: none;
   }
+}
+</style>
+
+<style>
+@page {
+  margin: 0;
+  size: A4 portrait;
 }
 </style>
