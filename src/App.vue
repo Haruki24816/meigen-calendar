@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue"
 import Forms from "./components/Forms.vue"
+import Modal from "./components/Modal.vue"
 
 // ↓↓↓
 
@@ -51,11 +52,36 @@ function updateScale(step) {
     viewerScale.value += step
   }
 }
+
+const modalObjects = ref({})
+
+function openModal(modalName) {
+  modalObjects.value[modalName].show()
+}
+
+function changeTemplate(templateId, withSave) {
+  if (withSave) {
+    save()
+  }
+  currentTemplateId.value = templateId
+}
+
+function save() {
+  // MADA
+}
+
+function print() {
+  setTimeout(() => {
+    window.print()
+  }, 1000)
+}
+
+const showControls = ref(true)
 </script>
 
 <template>
   <div class="d-flex flex-column d-print-block">
-    <div class="topBar bg-dark text-light row align-items-center shadow g-0 d-print-none">
+    <div class="topBar bg-dark text-light row align-items-center g-0 d-print-none">
       <div class="col d-flex align-items-center">
         <div class="mx-2">名言カレンダー</div>
         <div class="dropdown">
@@ -69,7 +95,7 @@ function updateScale(step) {
               <a v-if="templateId == currentTemplateId" class="dropdown-item active" href="#" @click.prevent>
                 {{ templateContent.templateName }}
               </a>
-              <a v-else class="dropdown-item" href="#" @click.prevent @click="currentTemplateId = templateId">
+              <a v-else class="dropdown-item" href="#" @click.prevent @click="openModal(templateId)">
                 {{ templateContent.templateName }}
               </a>
             </li>
@@ -116,28 +142,54 @@ function updateScale(step) {
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
           読み込み
         </button>
-        <button type="button" class="btn btn-dark me-1"
+        <button type="button" class="btn btn-dark me-1" @click="openModal('print')"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
           印刷
+        </button>
+        <button v-if="!showControls" type="button" class="btn btn-dark me-1" @click="showControls = true"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+          データ入力
         </button>
       </div>
     </div>
     <div class="mainContents d-flex d-print-block">
-      <div class="viewer overflow-scroll flex-grow-1 text-center d-print-block">
+      <div class="viewer overflow-auto flex-fill text-center d-print-block">
         <div class="d-inline-block viewerContents d-print-block" ref="viewer">
           <component :is="currentTemplate" :data="data" />
         </div>
       </div>
-      <div class="controls overflow-scroll bg-light shadow d-print-none">
-        <select v-model="currentTemplateId">
-          <option v-for="(templateContent, templateId) in templateData" :value="templateId">
-            {{ templateContent.templateName }}
-          </option>
-        </select>
-        <Forms :defaultData="defaultData" v-model="data" />
+      <div v-show="showControls" class="controls bg-light d-print-none flex-shrink-0">
+        <div class="d-flex flex-column pt-2 px-2 h-100">
+          <div class="d-flex p-2 justify-content-between align-items-center">
+            <h5 class="m-0">データ入力</h5>
+            <button type="button" class="btn btn-outline-secondary btn-sm" @click="showControls = false">非表示</button>
+          </div>
+          <div class="noScrollbar overflow-scroll pt-2 px-2">
+            <Forms :defaultData="defaultData" v-model="data" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <Modal v-for="(templateContent, templateId) in templateData" :name="templateId" v-model="modalObjects"
+    :modalTitle="templateContent.templateName" :buttons="{
+              'キャンセル': { buttonType: 'secondary', func: null },
+              '保存しない': { buttonType: 'secondary', func: () => { changeTemplate(templateId, false) } },
+              '保存': { buttonType: 'primary', func: () => { changeTemplate(templateId, true) } }
+            }">
+    <div>データを保存しますか。</div>
+    <div>テンプレートを切り替えると、現在入力されているデータは失われます。</div>
+    <div>クソ仕様すんません</div>
+  </Modal>
+  <Modal name="print" v-model="modalObjects" modalTitle="印刷" :buttons="{
+              'キャンセル': { buttonType: 'secondary', func: null },
+              '印刷': { buttonType: 'primary', func: print }
+            }">
+    <p>下記の設定で印刷してください。</p>
+    <ul>
+      <li v-for="item in defaultData.printOptions">{{ item }}</li>
+    </ul>
+  </Modal>
 </template>
 
 <style scoped>
@@ -147,12 +199,13 @@ function updateScale(step) {
   }
 
   .mainContents {
+    width: 100vw;
     height: calc(100vh - 40px);
   }
 
   .viewer {
-    width: calc(100vw - 250px);
     background-color: lightgray;
+    scroll-behavior: smooth;
   }
 
   .viewerContents {
@@ -160,7 +213,15 @@ function updateScale(step) {
   }
 
   .controls {
-    width: 250px;
+    width: 300px;
+  }
+
+  .noScrollbar {
+    scrollbar-width: none;
+  }
+
+  .noScrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>

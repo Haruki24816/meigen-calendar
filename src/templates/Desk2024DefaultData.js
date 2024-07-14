@@ -16,6 +16,12 @@ const defaultSectionData = {
 const desk2024DefaultData = {
   templateId: "desk2024",
   templateName: "卓上タイプ2024",
+  printOptions: [
+    "用紙：A4縦",
+    "印刷倍率：100%",
+    "余白無し",
+    "背景画像を印刷する"
+  ],
   sections: {
     "general": {
       sectionName: "共通データ",

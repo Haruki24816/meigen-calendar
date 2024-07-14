@@ -51,7 +51,6 @@ const props = defineProps(["data"])
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
   padding-top: 5mm;
   padding-bottom: 5mm;
 }
@@ -59,7 +58,6 @@ const props = defineProps(["data"])
 @media print {
   .sheet {
     margin: 0;
-    box-shadow: none;
   }
 }
 </style>

@@ -117,6 +117,7 @@ const holidays = props.sectionData.holidays.data
   font-size: v-bind(meigenFontSize);
   line-height: v-bind(meigenLineHeight);
   font-family: v-bind(font);
+  overflow: hidden;
 }
 
 .calendar {
@@ -127,7 +128,7 @@ const holidays = props.sectionData.holidays.data
 .calendarContainer {
   width: 70mm;
   height: 80mm;
-  margin-top: 5mm;
+  margin-top: 3mm;
   display: flex;
   flex-direction: column;
   justify-content: center;
