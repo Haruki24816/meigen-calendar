@@ -27,9 +27,9 @@ function autoscroll(sectionId) {
       </h2>
       <div :id="'collapse' + sectionId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
         <div class="accordion-body">
-          <component v-for="(value, key) in props.defaultData.sections[sectionId].sectionData" :is="value.formType"
-            :name="value.formName" :args="value.formArgs" :defaultData="value.data"
-            v-model="data.sections[sectionId].sectionData[key].data" />
+          <component v-for="(optionContent, optionName) in props.defaultData.sections[sectionId].sectionData" :is="optionContent.formType"
+            :name="optionContent.formName" :args="optionContent.formArgs" :defaultData="optionContent.data"
+            v-model="data.sections[sectionId].sectionData[optionName].data" />
         </div>
       </div>
     </div>

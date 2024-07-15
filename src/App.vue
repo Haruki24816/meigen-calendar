@@ -81,7 +81,7 @@ const showControls = ref(true)
 
 <template>
   <div class="d-flex flex-column d-print-block">
-    <div class="topBar bg-dark text-light row align-items-center g-0 d-print-none">
+    <div class="topBar bg-dark text-light row align-items-center g-0 d-print-none shadow z-3">
       <div class="col d-flex align-items-center">
         <div class="mx-2">名言カレンダー</div>
         <div class="dropdown">
@@ -158,7 +158,7 @@ const showControls = ref(true)
           <component :is="currentTemplate" :data="data" />
         </div>
       </div>
-      <div v-show="showControls" class="controls bg-light d-print-none flex-shrink-0">
+      <div v-show="showControls" class="controls bg-light d-print-none flex-shrink-0 shadow z-2">
         <div class="d-flex flex-column pt-2 px-2 h-100">
           <div class="d-flex p-2 justify-content-between align-items-center">
             <h5 class="m-0">データ入力</h5>

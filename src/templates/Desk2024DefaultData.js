@@ -27,7 +27,7 @@ const desk2024DefaultData = {
       sectionName: "共通データ",
       autoScroll: false,
       sectionData: {
-        tonbo: { formName: "トンボ", formType: FormBool, formArgs: {}, data: false },
+        tonbo: { formName: "トンボ非表示", formType: FormBool, formArgs: {}, data: true },
         font: { formName: "フォント", formType: FormSelect, formArgs: { items: ["RocknRoll One", "Zen Antique Soft", "Sawarabi Gothic", "Klee One", "Zen Old Mincho", "Shippori Mincho", "Sawarabi Mincho", "Noto Serif JP"] }, data: "Shippori Mincho" },
         year: { formName: "年", formType: FormNum, formArgs: {}, data: 2024 }
       }

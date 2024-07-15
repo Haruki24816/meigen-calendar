@@ -53,6 +53,7 @@ const props = defineProps(["data"])
   align-items: center;
   padding-top: 5mm;
   padding-bottom: 5mm;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
 }
 
 @media print {
