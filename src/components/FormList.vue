@@ -1,9 +1,20 @@
 <script setup>
+import { ref } from "vue"
+
 const props = defineProps(["name", "args", "defaultData"])
-const data = defineModel()
-data.value = props.defaultData
+const data = ref(props.defaultData)
 </script>
 
 <template>
-  <div>リスト「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」</div>
+  <tr>
+    <td>
+      リスト
+    </td>
+    <td>
+      {{ props.name }}
+    </td>
+    <td>
+      <input type="text" v-model="data" @change="$emit('updateData', data)">
+    </td>
+  </tr>
 </template>

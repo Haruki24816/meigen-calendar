@@ -1,9 +1,27 @@
 <script setup>
+import { ref } from "vue"
+
 const props = defineProps(["name", "args", "defaultData"])
-const data = defineModel()
-data.value = props.defaultData
+const data = ref(props.defaultData)
 </script>
 
 <template>
-  <div>ナンバー「{{ props.name }}」「{{ props.args }}」「{{ props.defaultData }}」</div>
+  <div class="formParts d-flex justify-content-between align-items-center">
+    <div class="user-select-none">
+      {{ props.name }}
+    </div>
+    <div class="formRightSide">
+      <input type="number" class="form-control form-control-sm" v-model="data" @change="$emit('updateData', data)">
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.formParts {
+  height: 40px;
+}
+
+.formRightSide {
+  width: 170px;
+}
+</style>

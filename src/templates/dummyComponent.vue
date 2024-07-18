@@ -1,5 +1,8 @@
 <script setup>
-const props = defineProps(["data"])
+import { ref } from "vue"
+import { store } from "../store"
+
+const data = ref(store.templates["dummy"])
 </script>
 
 <template>

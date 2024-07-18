@@ -1,27 +1,26 @@
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import hsl from "hsl-to-hex"
 import { calendar } from "../modules/calendar"
 
 const props = defineProps(["generalData", "sectionData", "month"])
 
-const printMode = !(props.generalData.tonbo.data)
-const font = props.generalData.font.data
-const color = props.sectionData.color.data
-const colorDark = ref(hsl(color, 56, 31))
-const colorLight = ref(hsl(color, 50, 92))
-const colorGray = ref(hsl(color, 39, 67))
+const printMode = computed(() => { return (props.generalData.tonbo.data) })
+const font = computed(() => { return props.generalData.font.data })
+const colorDark = computed(() => { return hsl(props.sectionData.color.data, 56, 31) })
+const colorLight = computed(() => { return hsl(props.sectionData.color.data, 50, 92) })
+const colorGray = computed(() => { return hsl(props.sectionData.color.data, 39, 67) })
 
-const meigenText = props.sectionData.meigenText.data
-const meigenFontSize = props.sectionData.meigenFontSize.data + "mm"
-const meigenLineHeight = props.sectionData.meigenLineHeight.data + "mm"
+const meigenText = computed(() => { return props.sectionData.meigenText.data })
+const meigenFontSize = computed(() => { return props.sectionData.meigenFontSize.data + "mm" })
+const meigenLineHeight = computed(() => { return props.sectionData.meigenLineHeight.data + "mm" })
 
-const month = String(props.month).padStart(2, "0")
-const year = props.generalData.year.data
-const lastMonthDates = ref(calendar.lastMonthDates(props.generalData.year.data, props.month))
-const dates = ref(calendar.currentMonthDates(props.generalData.year.data, props.month))
-const NextMonthDates = ref(calendar.nextMonthDates(props.generalData.year.data, props.month))
-const holidays = props.sectionData.holidays.data
+const month = computed(() => { return String(props.month).padStart(2, "0") })
+const year = computed(() => { return props.generalData.year.data })
+const lastMonthDates = computed(() => { return calendar.lastMonthDates(props.generalData.year.data, props.month) })
+const dates = computed(() => { return calendar.currentMonthDates(props.generalData.year.data, props.month) })
+const NextMonthDates = computed(() => { return calendar.nextMonthDates(props.generalData.year.data, props.month) })
+const holidays = computed(() => { return props.sectionData.holidays.data })
 </script>
 
 <template>
@@ -118,6 +117,7 @@ const holidays = props.sectionData.holidays.data
   line-height: v-bind(meigenLineHeight);
   font-family: v-bind(font);
   overflow: hidden;
+  margin: 0;
 }
 
 .calendar {

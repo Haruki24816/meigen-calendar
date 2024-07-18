@@ -1,49 +1,8 @@
 <script setup>
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import Forms from "./components/Forms.vue"
 import Modal from "./components/Modal.vue"
-
-// ↓↓↓
-
-import Desk2024 from "./templates/Desk2024.vue"
-import { desk2024DefaultData } from "./templates/Desk2024DefaultData"
-import Dummy from "./templates/Dummy.vue"
-import { dummyDefaultData } from "./templates/DummyDefaultData"
-
-const templates = [
-  [Desk2024, desk2024DefaultData],
-  [Dummy, dummyDefaultData]
-]
-
-// ↑↑↑
-
-const templateData = {}
-
-for (const templateContent of templates) {
-  templateData[templateContent[1].templateId] = {
-    templateName: templateContent[1].templateName,
-    componentObject: templateContent[0],
-    defaultData: templateContent[1]
-  }
-}
-
-const currentTemplateId = ref(Object.keys(templateData)[0])
-
-const currentTemplate = computed(() => {
-  return templateData[currentTemplateId.value].componentObject
-})
-
-const currentTemplateName = computed(() => {
-  return templateData[currentTemplateId.value].templateName
-})
-
-const defaultData = computed(() => {
-  return templateData[currentTemplateId.value].defaultData
-})
-
-const data = computed(() => {
-  return templateData[currentTemplateId.value].defaultData
-})
+import { store } from "./store"
 
 const viewerScale = ref(1)
 
@@ -63,7 +22,7 @@ function changeTemplate(templateId, withSave) {
   if (withSave) {
     save()
   }
-  currentTemplateId.value = templateId
+  store.currentTemplateId = templateId
 }
 
 function save() {
@@ -88,15 +47,15 @@ const showControls = ref(true)
           <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
             aria-expanded="false"
             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-            {{ currentTemplateName }}
+            {{ store.templates[store.currentTemplateId].templateName }}
           </button>
           <ul class="dropdown-menu">
-            <li v-for="(templateContent, templateId) in templateData">
-              <a v-if="templateId == currentTemplateId" class="dropdown-item active" href="#" @click.prevent>
-                {{ templateContent.templateName }}
+            <li v-for="(template, templateId) in store.templates">
+              <a v-if="templateId == store.currentTemplateId" class="dropdown-item active" href="#" @click.prevent>
+                {{ template.templateName }}
               </a>
               <a v-else class="dropdown-item" href="#" @click.prevent @click="openModal(templateId)">
-                {{ templateContent.templateName }}
+                {{ template.templateName }}
               </a>
             </li>
           </ul>
@@ -155,7 +114,7 @@ const showControls = ref(true)
     <div class="mainContents d-flex d-print-block">
       <div class="viewer overflow-auto flex-fill text-center d-print-block">
         <div class="d-inline-block viewerContents d-print-block" ref="viewer">
-          <component :is="currentTemplate" :data="data" />
+          <component :is="store.templates[store.currentTemplateId].component" />
         </div>
       </div>
       <div v-show="showControls" class="controls bg-light d-print-none flex-shrink-0 shadow z-2">
@@ -165,14 +124,14 @@ const showControls = ref(true)
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="showControls = false">非表示</button>
           </div>
           <div class="noScrollbar overflow-scroll pt-2 px-2">
-            <Forms :defaultData="defaultData" v-model="data" />
+            <Forms :templateId="store.currentTemplateId" />
           </div>
         </div>
       </div>
     </div>
   </div>
-  <Modal v-for="(templateContent, templateId) in templateData" :name="templateId" v-model="modalObjects"
-    :modalTitle="templateContent.templateName" :buttons="{
+  <Modal v-for="(template, templateId) in store.templates" :name="templateId" v-model="modalObjects"
+    :modalTitle="template.templateName" :buttons="{
               'キャンセル': { buttonType: 'secondary', func: null },
               '保存しない': { buttonType: 'secondary', func: () => { changeTemplate(templateId, false) } },
               '保存': { buttonType: 'primary', func: () => { changeTemplate(templateId, true) } }
@@ -187,7 +146,7 @@ const showControls = ref(true)
             }">
     <p>下記の設定で印刷してください。</p>
     <ul>
-      <li v-for="item in defaultData.printOptions">{{ item }}</li>
+      <li v-for="item in store.templates[store.currentTemplateId].printOptions">{{ item }}</li>
     </ul>
   </Modal>
 </template>
@@ -213,7 +172,7 @@ const showControls = ref(true)
   }
 
   .controls {
-    width: 300px;
+    width: 350px;
   }
 
   .noScrollbar {
