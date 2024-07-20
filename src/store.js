@@ -24,7 +24,7 @@ for (const templateId in data.templates) {
     const sectionContents = template.sections[sectionId]
     for (const optionName in sectionContents.sectionData) {
       const optionContent = sectionContents.sectionData[optionName]
-      data.templates[templateId].sections[sectionId].sectionData[optionName]["defaultData"] = optionContent.data
+      data.templates[templateId].sections[sectionId].sectionData[optionName]["defaultData"] = structuredClone(optionContent.data)
     }
   }
 }

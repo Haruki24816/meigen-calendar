@@ -19,7 +19,7 @@ function autoScroll(sectionId) {
 }
 
 function updateTemplateData(sectionId, optionName, data) {
-  store.templates[store.currentTemplateId].sections[sectionId].sectionData[optionName].data = data
+  store.templates[store.currentTemplateId].sections[sectionId].sectionData[optionName].data = structuredClone(data)
 }
 </script>
 

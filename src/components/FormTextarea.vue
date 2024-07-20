@@ -2,13 +2,24 @@
 import { ref } from "vue"
 
 const props = defineProps(["name", "args", "defaultData"])
+const emit = defineEmits(["updateData"])
 const data = ref(props.defaultData)
+
+function cls() {
+  data.value = ""
+  emit("updateData", data)
+}
 </script>
 
 <template>
   <div class="formParts d-flex justify-content-between align-items-center">
-    <div>
-      {{ props.name }}
+    <div class="dropdown">
+      <div class="dropdown-toggle user-select-none" data-bs-toggle="dropdown">
+        {{ props.name }}
+      </div>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#" @click.prevent @click="cls()">クリア</a></li>
+      </ul>
     </div>
     <div class="formRightSide">
       <textarea class="form-control" v-model="data" @input="$emit('updateData', data)"></textarea>
@@ -26,7 +37,7 @@ const data = ref(props.defaultData)
   width: 170px;
 }
 
-textarea { 
+textarea {
   height: 100%;
   resize: none;
   white-space: pre;

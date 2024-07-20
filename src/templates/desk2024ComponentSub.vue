@@ -117,6 +117,7 @@ const holidays = computed(() => { return props.sectionData.holidays.data })
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  background-color: v-bind(colorLight);
 }
 
 .image>img {
