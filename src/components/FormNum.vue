@@ -7,11 +7,11 @@ const data = ref(props.defaultData)
 
 <template>
   <div class="formParts d-flex justify-content-between align-items-center">
-    <div class="user-select-none">
+    <div>
       {{ props.name }}
     </div>
     <div class="formRightSide">
-      <input type="number" class="form-control form-control-sm" v-model="data" @change="$emit('updateData', data)">
+      <input type="number" class="form-control form-control-sm" v-model="data" @input="$emit('updateData', data)">
     </div>
   </div>
 </template>

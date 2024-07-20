@@ -18,10 +18,7 @@ function openModal(modalName) {
   modalObjects.value[modalName].show()
 }
 
-function changeTemplate(templateId, withSave) {
-  if (withSave) {
-    save()
-  }
+function changeTemplate(templateId) {
   store.currentTemplateId = templateId
 }
 
@@ -54,7 +51,7 @@ const showControls = ref(true)
               <a v-if="templateId == store.currentTemplateId" class="dropdown-item active" href="#" @click.prevent>
                 {{ template.templateName }}
               </a>
-              <a v-else class="dropdown-item" href="#" @click.prevent @click="openModal(templateId)">
+              <a v-else class="dropdown-item" href="#" @click.prevent @click="changeTemplate(templateId)">
                 {{ template.templateName }}
               </a>
             </li>
@@ -130,20 +127,10 @@ const showControls = ref(true)
       </div>
     </div>
   </div>
-  <Modal v-for="(template, templateId) in store.templates" :name="templateId" v-model="modalObjects"
-    :modalTitle="template.templateName" :buttons="{
-              'キャンセル': { buttonType: 'secondary', func: null },
-              '保存しない': { buttonType: 'secondary', func: () => { changeTemplate(templateId, false) } },
-              '保存': { buttonType: 'primary', func: () => { changeTemplate(templateId, true) } }
-            }">
-    <div>データを保存しますか。</div>
-    <div>テンプレートを切り替えると、現在入力されているデータは失われます。</div>
-    <div>クソ仕様すんません</div>
-  </Modal>
   <Modal name="print" v-model="modalObjects" modalTitle="印刷" :buttons="{
-              'キャンセル': { buttonType: 'secondary', func: null },
-              '印刷': { buttonType: 'primary', func: print }
-            }">
+    'キャンセル': { buttonType: 'secondary', func: null },
+    '印刷': { buttonType: 'primary', func: print }
+  }">
     <p>下記の設定で印刷してください。</p>
     <ul>
       <li v-for="item in store.templates[store.currentTemplateId].printOptions">{{ item }}</li>

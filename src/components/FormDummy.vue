@@ -11,24 +11,19 @@ const data = ref(props.defaultData)
       {{ props.name }}
     </div>
     <div class="formRightSide">
-      <textarea class="form-control" v-model="data" @input="$emit('updateData', data)"></textarea>
+      <div>
+        {{ props.args.message }}
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .formParts {
-  height: 100px;
+  height: 40px;
 }
 
 .formRightSide {
-  height: 90px;
   width: 170px;
-}
-
-textarea { 
-  height: 100%;
-  resize: none;
-  white-space: pre;
 }
 </style>

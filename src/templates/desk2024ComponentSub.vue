@@ -11,9 +11,19 @@ const colorDark = computed(() => { return hsl(props.sectionData.color.data, 56, 
 const colorLight = computed(() => { return hsl(props.sectionData.color.data, 50, 92) })
 const colorGray = computed(() => { return hsl(props.sectionData.color.data, 39, 67) })
 
-const meigenText = computed(() => { return props.sectionData.meigenText.data })
+const imageData = computed(() => { return props.sectionData.image.data })
+
+const meigenText = computed(() => { return props.sectionData.meigenText.data.split("\n") })
+const meigenPosition = computed(() => { return props.sectionData.meigenPosition.data })
+const meigenOffset = computed(() => { return props.sectionData.meigenOffset.data + "mm" })
 const meigenFontSize = computed(() => { return props.sectionData.meigenFontSize.data + "mm" })
-const meigenLineHeight = computed(() => { return props.sectionData.meigenLineHeight.data + "mm" })
+const meigenLineHeight = computed(() => {
+  if (Math.round(props.sectionData.meigenLineHeight.data) > Math.round(props.sectionData.meigenFontSize.data * 0.8)) {
+    return props.sectionData.meigenLineHeight.data + "mm"
+  } else {
+    return props.sectionData.meigenFontSize.data * 0.8 + "mm"
+  }
+})
 
 const month = computed(() => { return String(props.month).padStart(2, "0") })
 const year = computed(() => { return props.generalData.year.data })
@@ -35,9 +45,12 @@ const holidays = computed(() => { return props.sectionData.holidays.data })
     <div v-else class="box4 whiteBox"></div>
     <div class="contents">
       <div class="image">
+        <img :src="imageData">
       </div>
       <div class="meigen">
-        <pre class="meigenContent">{{ meigenText }}</pre>
+        <div v-for="meigenLine in meigenText" class="meigenLine">
+          {{ meigenLine }}
+        </div>
       </div>
       <div class="calendar">
         <div class="calendarContainer">
@@ -59,10 +72,10 @@ const holidays = computed(() => { return props.sectionData.holidays.data })
               <div>{{ date }}</div>
             </div>
             <template v-for="date in dates">
-              <div v-if="holidays.includes(date)" class="date holiday">
+              <div v-if="holidays.includes(date)" class="date holiday" @click="$emit('clickHoliday', date)">
                 <div>{{ date }}</div>
               </div>
-              <div v-else class="date">
+              <div v-else class="date" @click="$emit('clickHoliday', date)">
                 <div>{{ date }}</div>
               </div>
             </template>
@@ -100,29 +113,42 @@ const holidays = computed(() => { return props.sectionData.holidays.data })
 
 .image {
   width: 75mm;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image>img {
+  height: 100%;
 }
 
 .meigen {
   width: 40mm;
+  padding-top: 3mm;
+  padding-bottom: 3mm;
   background-color: v-bind(colorDark);
   display: flex;
+  flex-direction: row-reverse;
   justify-content: center;
-  align-items: center;
+  align-items: v-bind(meigenPosition);
+  overflow: hidden;
 }
 
-.meigenContent {
+.meigenLine {
   writing-mode: vertical-rl;
   color: white;
   font-size: v-bind(meigenFontSize);
   line-height: v-bind(meigenLineHeight);
   font-family: v-bind(font);
-  overflow: hidden;
   margin: 0;
+  transform: translateY(v-bind("meigenOffset"));
 }
 
 .calendar {
   width: 75mm;
   background-color: v-bind(colorLight);
+  user-select: none;
 }
 
 .calendarContainer {
@@ -184,6 +210,10 @@ const holidays = computed(() => { return props.sectionData.holidays.data })
   height: 6mm;
   font-size: 3.5mm;
   margin: 0.5mm 0.5mm 1.8mm 0.5mm;
+}
+
+.date:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .holiday {

@@ -7,14 +7,15 @@ const data = ref(props.defaultData)
 
 <template>
   <div class="formParts d-flex justify-content-between align-items-center">
-    <div class="user-select-none">
+    <div>
       {{ props.name }}
     </div>
     <div class="formRightSide">
       <select class="form-select form-select-sm" v-model="data" @change="$emit('updateData', data)">
-        <template v-for="item in props.args.items">
-          <option v-if="props.defaultData == item" :value="item" selected>{{ item }}</option>
-          <option v-else :value="item">{{ item }}</option>
+        <template v-for="(dataValue, index) in props.args.values">
+          <option v-if="props.defaultData == dataValue" :value="dataValue" selected>{{ props.args.items[index] }}
+          </option>
+          <option v-else :value="dataValue">{{ props.args.items[index] }}</option>
         </template>
       </select>
     </div>

@@ -4,40 +4,31 @@ import desk2024ComponentSub from "./desk2024ComponentSub.vue"
 import { store } from "../store"
 
 const data = ref(store.templates["desk2024"])
+
+function setHoliday(month, date) {
+  let holidayList = store.templates["desk2024"].sections['desk2024' + month].sectionData["holidays"].data
+  if (holidayList.includes(date)) {
+    let index = null
+    for (const num in holidayList) {
+      if (holidayList[num] == date) {
+        index = num
+      }
+    }
+    if (index != null) {
+      holidayList = holidayList.splice(index, 1)
+    }
+  } else {
+    holidayList.push(date)
+  }
+}
 </script>
 
 <template>
-  <div class="sheet">
-    <desk2024ComponentSub id="desk20241" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20241'].sectionData" :month="1" />
-    <desk2024ComponentSub id="desk20242" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20242'].sectionData" :month="2" />
-    <desk2024ComponentSub id="desk20243" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20243'].sectionData" :month="3" />
-  </div>
-  <div class="sheet">
-    <desk2024ComponentSub id="desk20249" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20249'].sectionData" :month="9" />
-    <desk2024ComponentSub id="desk20248" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20248'].sectionData" :month="8" />
-    <desk2024ComponentSub id="desk20247" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20247'].sectionData" :month="7" />
-  </div>
-  <div class="sheet">
-    <desk2024ComponentSub id="desk20244" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20244'].sectionData" :month="4" />
-    <desk2024ComponentSub id="desk20245" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20245'].sectionData" :month="5" />
-    <desk2024ComponentSub id="desk20246" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk20246'].sectionData" :month="6" />
-  </div>
-  <div class="sheet">
-    <desk2024ComponentSub id="desk202412" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk202412'].sectionData" :month="12" />
-    <desk2024ComponentSub id="desk202411" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk202411'].sectionData" :month="11" />
-    <desk2024ComponentSub id="desk202410" :generalData="data.sections['general'].sectionData"
-      :sectionData="data.sections['desk202410'].sectionData" :month="10" />
+  <div class="sheet" v-for="months in [[1, 2, 3], [9, 8, 7], [4, 5, 6], [12, 11, 10]]">
+    <desk2024ComponentSub v-for="month in months" :id="'desk2024' + month"
+      :generalData="data.sections['general'].sectionData" :sectionData="data.sections['desk2024' + month].sectionData"
+      :month="month"
+      @click-holiday="(event) => { setHoliday(month, event) }" />
   </div>
 </template>
 
