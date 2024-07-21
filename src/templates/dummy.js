@@ -1,5 +1,3 @@
-import { shallowRef } from "vue"
-
 import dummyComponent from "./dummyComponent.vue"
 import FormBool from "../components/FormBool.vue"
 
@@ -9,13 +7,18 @@ export const dummy = {
   printOptions: [
     "ダミー"
   ],
-  component: shallowRef(dummyComponent),
+  component: dummyComponent,
   sections: {
-    "g": {
-      sectionName: "g",
+    "dummySection": {
+      sectionName: "ダミーセクション",
       autoScroll: false,
-      sectionData: {
-        g: { formName: "g", formType: shallowRef(FormBool), formArgs: {}, data: false }
+      options: {
+        "dummyOption": {
+          optionName: "ダミーオプション",
+          formType: FormBool,
+          formArgs: {},
+          default: false
+        }
       }
     }
   }

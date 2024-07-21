@@ -1,39 +1,52 @@
 <script setup>
-import { ref } from "vue"
+import { ref, watch, computed } from "vue"
+import { store } from "../store"
 
-const props = defineProps(["name", "args", "defaultData"])
-const emit = defineEmits(["updateData"])
-const data = ref(props.defaultData)
-
-function reset() {
-  data.value = props.defaultData
-  emit("updateData", data)
-}
+const props = defineProps(["sectionId", "optionId"])
+const data = ref(store.getOptionData(props.sectionId, props.optionId))
 
 function randomChoice() {
-  const index = Math.round(props.args.values.length * Math.random())
-  data.value = props.args.values[index]
-  emit("updateData", data)
+  const index = Math.round(store.getOptionArgs(props.sectionId, props.optionId).values.length * Math.random())
+  data.value = store.getOptionArgs(props.sectionId, props.optionId).values[index]
+  store.setOptionData(props.sectionId, props.optionId, data.value)
 }
+
+const currentTemplateId = computed(() => {
+  return store.currentTemplateId
+})
+
+watch(currentTemplateId, (newValue, oldValue) => {
+  data.value = store.getOptionData(props.sectionId, props.optionId)
+})
 </script>
 
 <template>
   <div class="formParts d-flex justify-content-between align-items-center">
     <div class="dropdown">
       <div class="dropdown-toggle user-select-none" data-bs-toggle="dropdown">
-        {{ props.name }}
+        {{ store.getOptionName(props.sectionId, props.optionId) }}
       </div>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#" @click.prevent @click="reset()">リセット</a></li>
-        <li v-if="props.args.random"><a class="dropdown-item" href="#" @click.prevent @click="randomChoice()">ランダム</a></li>
+        <li>
+          <a class="dropdown-item" href="#" @click.prevent
+            @click="data = store.setOptionDefault(props.sectionId, props.optionId)">
+            リセット
+          </a>
+        </li>
+        <li v-if="store.getOptionArgs(props.sectionId, props.optionId).random">
+          <a class="dropdown-item" href="#" @click.prevent @click="randomChoice()">
+            ランダム
+          </a>
+        </li>
       </ul>
     </div>
     <div class="formRightSide">
-      <select class="form-select form-select-sm" v-model="data" @change="$emit('updateData', data)">
-        <template v-for="(dataValue, index) in props.args.values">
-          <option v-if="props.defaultData == dataValue" :value="dataValue" selected>{{ props.args.items[index] }}
+      <select class="form-select form-select-sm" v-model="data"
+        @change="store.setOptionData(props.sectionId, props.optionId, data)">
+        <template v-for="(dataValue, index) in store.getOptionArgs(props.sectionId, props.optionId).values">
+          <option :value="dataValue">
+            {{ store.getOptionArgs(props.sectionId, props.optionId).items[index] }}
           </option>
-          <option v-else :value="dataValue">{{ props.args.items[index] }}</option>
         </template>
       </select>
     </div>

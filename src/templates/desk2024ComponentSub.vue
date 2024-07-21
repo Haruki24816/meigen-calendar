@@ -1,36 +1,51 @@
 <script setup>
-import { ref, computed } from "vue"
+import { computed } from "vue"
 import hsl from "hsl-to-hex"
 import { calendar } from "../modules/calendar"
+import { store } from "../store"
 
-const props = defineProps(["generalData", "sectionData", "month"])
+const props = defineProps(["sectionId", "month"])
 
-const printMode = computed(() => { return (props.generalData.tonbo.data) })
-const font = computed(() => { return props.generalData.font.data })
-const colorDark = computed(() => { return hsl(props.sectionData.color.data, 56, 31) })
-const colorLight = computed(() => { return hsl(props.sectionData.color.data, 50, 92) })
-const colorGray = computed(() => { return hsl(props.sectionData.color.data, 39, 67) })
+const printMode = computed(() => { return store.getOptionData("general", "tonbo") })
+const font = computed(() => { return store.getOptionData("general", "font") })
+const year = computed(() => { return store.getOptionData("general", "year") })
 
-const imageData = computed(() => { return props.sectionData.image.data })
+const colorDark = computed(() => { return hsl(store.getOptionData(props.sectionId, "color"), 56, 31) })
+const colorLight = computed(() => { return hsl(store.getOptionData(props.sectionId, "color"), 50, 92) })
+const colorGray = computed(() => { return hsl(store.getOptionData(props.sectionId, "color"), 39, 67) })
 
-const meigenText = computed(() => { return props.sectionData.meigenText.data.split("\n") })
-const meigenPosition = computed(() => { return props.sectionData.meigenPosition.data })
-const meigenOffset = computed(() => { return props.sectionData.meigenOffset.data + "mm" })
-const meigenFontSize = computed(() => { return props.sectionData.meigenFontSize.data + "mm" })
+const imageData = computed(() => { return store.getOptionData(props.sectionId, "image") })
+
+const meigenText = computed(() => { return store.getOptionData(props.sectionId, "meigenText").split("\n") })
+const meigenPosition = computed(() => { return store.getOptionData(props.sectionId, "meigenPosition") })
+const meigenOffset = computed(() => { return store.getOptionData(props.sectionId, "meigenOffset") + "mm" })
+const meigenFontSize = computed(() => { return store.getOptionData(props.sectionId, "meigenFontSize") + "mm" })
 const meigenLineHeight = computed(() => {
-  if (Math.round(props.sectionData.meigenLineHeight.data) > Math.round(props.sectionData.meigenFontSize.data * 0.8)) {
-    return props.sectionData.meigenLineHeight.data + "mm"
+  const lineHeight = store.getOptionData(props.sectionId, "meigenLineHeight")
+  const fontSize = store.getOptionData(props.sectionId, "meigenFontSize")
+  if (Math.round(lineHeight) > Math.round(fontSize * 0.8)) {
+    return lineHeight + "mm"
   } else {
-    return props.sectionData.meigenFontSize.data * 0.8 + "mm"
+    return fontSize * 0.8 + "mm"
   }
 })
 
 const month = computed(() => { return String(props.month).padStart(2, "0") })
-const year = computed(() => { return props.generalData.year.data })
-const lastMonthDates = computed(() => { return calendar.lastMonthDates(props.generalData.year.data, props.month) })
-const dates = computed(() => { return calendar.currentMonthDates(props.generalData.year.data, props.month) })
-const NextMonthDates = computed(() => { return calendar.nextMonthDates(props.generalData.year.data, props.month) })
-const holidays = computed(() => { return props.sectionData.holidays.data })
+const lastMonthDates = computed(() => {
+  return calendar.lastMonthDates(store.getOptionData("general", "year"), props.month)
+})
+const dates = computed(() => {
+  return calendar.currentMonthDates(store.getOptionData("general", "year"), props.month)
+})
+const NextMonthDates = computed(() => {
+  return calendar.nextMonthDates(store.getOptionData("general", "year"), props.month)
+})
+const holidays = computed(() => { return store.getOptionData(props.sectionId, "holidays") })
+
+function updateHoliday(date) {
+  holidays.value[date] = !(holidays.value[date])
+  store.setOptionData(props.sectionId, "holidays", holidays.value)
+}
 </script>
 
 <template>
@@ -72,10 +87,10 @@ const holidays = computed(() => { return props.sectionData.holidays.data })
               <div>{{ date }}</div>
             </div>
             <template v-for="date in dates">
-              <div v-if="holidays.includes(date)" class="date holiday" @click="$emit('clickHoliday', date)">
+              <div v-if="holidays[date]" class="date holiday" @click="updateHoliday(date)">
                 <div>{{ date }}</div>
               </div>
-              <div v-else class="date" @click="$emit('clickHoliday', date)">
+              <div v-else class="date" @click="updateHoliday(date)">
                 <div>{{ date }}</div>
               </div>
             </template>

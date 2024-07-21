@@ -1,34 +1,11 @@
 <script setup>
-import { ref } from "vue"
 import desk2024ComponentSub from "./desk2024ComponentSub.vue"
-import { store } from "../store"
-
-const data = ref(store.templates["desk2024"])
-
-function setHoliday(month, date) {
-  let holidayList = store.templates["desk2024"].sections['desk2024' + month].sectionData["holidays"].data
-  if (holidayList.includes(date)) {
-    let index = null
-    for (const num in holidayList) {
-      if (holidayList[num] == date) {
-        index = num
-      }
-    }
-    if (index != null) {
-      holidayList = holidayList.splice(index, 1)
-    }
-  } else {
-    holidayList.push(date)
-  }
-}
 </script>
 
 <template>
   <div class="sheet" v-for="months in [[1, 2, 3], [9, 8, 7], [4, 5, 6], [12, 11, 10]]">
-    <desk2024ComponentSub v-for="month in months" :id="'desk2024' + month"
-      :generalData="data.sections['general'].sectionData" :sectionData="data.sections['desk2024' + month].sectionData"
-      :month="month"
-      @click-holiday="(event) => { setHoliday(month, event) }" />
+    <desk2024ComponentSub v-for="month in months" :id="'desk2024' + month" :sectionId="'desk2024' + month"
+      :month="month" />
   </div>
 </template>
 

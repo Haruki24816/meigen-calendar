@@ -1,19 +1,23 @@
 <script setup>
-import { ref } from "vue"
+import { ref, watch, computed } from "vue"
+import { store } from "../store"
 
-const props = defineProps(["name", "args", "defaultData"])
-const emit = defineEmits(["updateData"])
-const data = ref(props.defaultData)
-
-function reset() {
-  data.value = props.defaultData
-  emit("updateData", data)
-}
+const props = defineProps(["sectionId", "optionId"])
+const data = ref(store.getOptionData(props.sectionId, props.optionId))
 
 function randomChoice() {
-  data.value = Math.round((props.args.max - props.args.min) * Math.random() + props.args.min)
-  emit("updateData", data)
+  const args = store.getOptionArgs(props.sectionId, props.optionId)
+  data.value = Math.round((args.max - args.min) * Math.random() + args.min)
+  store.setOptionData(props.sectionId, props.optionId, data.value)
 }
+
+const currentTemplateId = computed(() => {
+  return store.currentTemplateId
+})
+
+watch(currentTemplateId, (newValue, oldValue) => {
+  data.value = store.getOptionData(props.sectionId, props.optionId)
+})
 </script>
 
 <template>
@@ -21,22 +25,34 @@ function randomChoice() {
     <div class="flex-grow-1">
       <div class="dropdown">
         <div class="dropdown-toggle user-select-none" data-bs-toggle="dropdown">
-          {{ props.name }}
+          {{ store.getOptionName(props.sectionId, props.optionId) }}
         </div>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" @click.prevent @click="reset()">リセット</a></li>
-          <li v-if="props.args.random"><a class="dropdown-item" href="#" @click.prevent @click="randomChoice()">ランダム</a>
+          <li>
+            <a class="dropdown-item" href="#" @click.prevent
+              @click="data = store.setOptionDefault(props.sectionId, props.optionId)">
+              リセット
+            </a>
+          </li>
+          <li v-if="store.getOptionArgs(props.sectionId, props.optionId).random">
+            <a class="dropdown-item" href="#" @click.prevent @click="randomChoice()">
+              ランダム
+            </a>
           </li>
         </ul>
       </div>
     </div>
     <div class="formRange lh-1">
-      <input type="range" class="form-range" v-model="data" :min="props.args.min" :max="props.args.max"
-        :step="props.args.step" @input="$emit('updateData', data)">
+      <input type="range" class="form-range" v-model="data"
+        :min="store.getOptionArgs(props.sectionId, props.optionId).min"
+        :max="store.getOptionArgs(props.sectionId, props.optionId).max"
+        :step="store.getOptionArgs(props.sectionId, props.optionId).step"
+        @input="store.setOptionData(props.sectionId, props.optionId, data)">
     </div>
     <div class="formNumber">
-      <input type="number" class="form-control form-control-sm" v-model="data" :step="props.args.step"
-        @input="$emit('updateData', data)">
+      <input type="number" class="form-control form-control-sm" v-model="data"
+        :step="store.getOptionArgs(props.sectionId, props.optionId).step"
+        @input="store.setOptionData(props.sectionId, props.optionId, data)">
     </div>
   </div>
 </template>

@@ -18,14 +18,6 @@ function openModal(modalName) {
   modalObjects.value[modalName].show()
 }
 
-function changeTemplate(templateId) {
-  store.currentTemplateId = templateId
-}
-
-function save() {
-  // MADA
-}
-
 function print() {
   setTimeout(() => {
     window.print()
@@ -44,15 +36,16 @@ const showControls = ref(true)
           <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
             aria-expanded="false"
             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-            {{ store.templates[store.currentTemplateId].templateName }}
+            {{ store.getCurrentTemplateName() }}
           </button>
           <ul class="dropdown-menu">
-            <li v-for="(template, templateId) in store.templates">
-              <a v-if="templateId == store.currentTemplateId" class="dropdown-item active" href="#" @click.prevent>
-                {{ template.templateName }}
+            <li v-for="(templateName, templateId) in store.getTemplateNames()">
+              <a v-if="store.isCurrentTemplateId(templateId)" class="dropdown-item active" href="#" @click.prevent>
+                {{ templateName }}
               </a>
-              <a v-else class="dropdown-item" href="#" @click.prevent @click="changeTemplate(templateId)">
-                {{ template.templateName }}
+              <a v-else class="dropdown-item" href="#" @click.prevent
+                @click="store.changeCurrentTemplateId(templateId)">
+                {{ templateName }}
               </a>
             </li>
           </ul>
@@ -111,7 +104,7 @@ const showControls = ref(true)
     <div class="mainContents d-flex d-print-block">
       <div class="viewer overflow-auto flex-fill text-center d-print-block">
         <div class="d-inline-block viewerContents d-print-block" ref="viewer">
-          <component :is="store.templates[store.currentTemplateId].component" />
+          <component :is="store.getCurrentTemplateComponent()" />
         </div>
       </div>
       <div v-show="showControls" class="controls bg-light d-print-none flex-shrink-0 shadow z-2">
@@ -121,7 +114,7 @@ const showControls = ref(true)
             <button type="button" class="btn btn-outline-secondary btn-sm" @click="showControls = false">非表示</button>
           </div>
           <div class="noScrollbar overflow-scroll pt-2 px-2">
-            <Forms :templateId="store.currentTemplateId" />
+            <Forms />
           </div>
         </div>
       </div>
@@ -133,7 +126,7 @@ const showControls = ref(true)
   }">
     <p>下記の設定で印刷してください。</p>
     <ul>
-      <li v-for="item in store.templates[store.currentTemplateId].printOptions">{{ item }}</li>
+      <li v-for="item in store.getCurrentTemplatePrintOptions()">{{ item }}</li>
     </ul>
   </Modal>
 </template>

@@ -1,36 +1,44 @@
 <script setup>
-import { ref } from "vue"
+import { ref, watch, computed } from "vue"
+import { store } from "../store"
 
-const props = defineProps(["name", "args", "defaultData"])
-const emit = defineEmits(["updateData"])
-const data = ref(props.defaultData)
+const props = defineProps(["sectionId", "optionId"])
+const data = ref(store.getOptionData(props.sectionId, props.optionId))
 
-function updateData() {
-  data.value = !(data.value)
-  emit("updateData", data)
+function updateData(newData) {
+  data.value = newData
+  store.setOptionData(props.sectionId, props.optionId, newData)
 }
 
-function reset() {
-  data.value = props.defaultData
-  emit("updateData", data)
-}
+const currentTemplateId = computed(() => {
+  return store.currentTemplateId
+})
+
+watch(currentTemplateId, (newValue, oldValue) => {
+  data.value = store.getOptionData(props.sectionId, props.optionId)
+})
 </script>
 
 <template>
   <div class="formParts d-flex justify-content-between align-items-center">
     <div class="dropdown">
       <div class="dropdown-toggle user-select-none" data-bs-toggle="dropdown">
-        {{ props.name }}
+        {{ store.getOptionName(props.sectionId, props.optionId) }}
       </div>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#" @click.prevent @click="reset()">リセット</a></li>
+        <li>
+          <a class="dropdown-item" href="#" @click.prevent
+            @click="data = store.setOptionDefault(props.sectionId, props.optionId)">
+            リセット
+          </a>
+        </li>
       </ul>
     </div>
     <div class="formRightSide">
-      <button v-if="data" class="btn btn-primary btn-sm w-100" @click="updateData()">
+      <button v-if="data" class="btn btn-primary btn-sm w-100" @click="updateData(false)">
         ON
       </button>
-      <button v-else class="btn btn-secondary btn-sm w-100" @click="updateData()">
+      <button v-else class="btn btn-secondary btn-sm w-100" @click="updateData(true)">
         OFF
       </button>
     </div>

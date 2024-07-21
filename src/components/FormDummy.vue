@@ -1,25 +1,26 @@
 <script setup>
-const props = defineProps(["name", "args", "defaultData"])
-const emit = defineEmits(["updateData"])
-
-function reset() {
-  emit("updateData", (props.defaultData))
-}
+import { store } from "../store"
+const props = defineProps(["sectionId", "optionId"])
 </script>
 
 <template>
   <div class="formParts d-flex justify-content-between align-items-center">
     <div class="dropdown">
       <div class="dropdown-toggle user-select-none" data-bs-toggle="dropdown">
-        {{ props.name }}
+        {{ store.getOptionName(props.sectionId, props.optionId) }}
       </div>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#" @click.prevent @click="reset()">リセット</a></li>
+        <li>
+          <a class="dropdown-item" href="#" @click.prevent
+            @click="store.setOptionDefault(props.sectionId, props.optionId)">
+            リセット
+          </a>
+        </li>
       </ul>
     </div>
     <div class="formRightSide">
       <div>
-        {{ props.args.message }}
+        {{ store.getOptionArgs(props.sectionId, props.optionId).message }}
       </div>
     </div>
   </div>
