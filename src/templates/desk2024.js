@@ -24,6 +24,24 @@ function copyMonthOptions() {
       formArgs: {},
       default: defaultImage
     },
+    "imageScale": {
+      optionName: "画像倍率",
+      formType: FormRange,
+      formArgs: { min: 25, max: 400, step: 1 },
+      default: 100
+    },
+    "imageOffsetX": {
+      optionName: "画像横位置",
+      formType: FormRange,
+      formArgs: { min: -100, max: 100, step: 0.5 },
+      default: 0
+    },
+    "imageOffsetY": {
+      optionName: "画像縦位置",
+      formType: FormRange,
+      formArgs: { min: -100, max: 100, step: 0.5 },
+      default: 0
+    },
     "meigenText": {
       optionName: "名言",
       formType: FormTextarea,

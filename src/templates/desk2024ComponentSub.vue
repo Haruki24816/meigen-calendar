@@ -15,6 +15,9 @@ const colorLight = computed(() => { return hsl(store.getOptionData(props.section
 const colorGray = computed(() => { return hsl(store.getOptionData(props.sectionId, "color"), 39, 67) })
 
 const imageData = computed(() => { return store.getOptionData(props.sectionId, "image") })
+const imageScale = computed(() => { return store.getOptionData(props.sectionId, "imageScale") / 100 + 0.01 })
+const imageOffsetX = computed(() => { return store.getOptionData(props.sectionId, "imageOffsetX") + "mm" })
+const imageOffsetY = computed(() => { return store.getOptionData(props.sectionId, "imageOffsetY") + "mm" })
 
 const meigenText = computed(() => { return store.getOptionData(props.sectionId, "meigenText").split("\n") })
 const meigenPosition = computed(() => { return store.getOptionData(props.sectionId, "meigenPosition") })
@@ -49,7 +52,7 @@ function updateHoliday(date) {
 </script>
 
 <template>
-  <div class="containerBox">
+  <div class="containerBox" @dblclick="store.setOptionData('general', 'tonbo', !printMode)">
     <div v-if="printMode" class="box1"></div>
     <div v-else class="box1 whiteBox"></div>
     <div v-if="printMode" class="box2"></div>
@@ -111,6 +114,7 @@ function updateHoliday(date) {
   width: 200mm;
   height: 92mm;
   line-height: 1;
+  user-select: none;
 }
 
 .contents {
@@ -132,11 +136,12 @@ function updateHoliday(date) {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: v-bind(colorLight);
+  background-color: black;
 }
 
 .image>img {
-  height: 100%;
+  width: 100%;
+  transform: scale(v-bind("imageScale")) translateX(v-bind("imageOffsetX")) translateY(v-bind("imageOffsetY"));
 }
 
 .meigen {
@@ -164,7 +169,6 @@ function updateHoliday(date) {
 .calendar {
   width: 75mm;
   background-color: v-bind(colorLight);
-  user-select: none;
 }
 
 .calendarContainer {
