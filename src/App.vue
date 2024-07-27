@@ -2,7 +2,9 @@
 import { ref } from "vue"
 import Forms from "./components/Forms.vue"
 import Modal from "./components/Modal.vue"
+import DataLoader from "./components/DataLoader.vue"
 import { store } from "./store"
+import { getNowYMDhmsStr } from "./modules/getNowYMDhmsStr"
 
 const viewerScale = ref(1)
 
@@ -25,10 +27,24 @@ function print() {
 }
 
 const showControls = ref(true)
+
+const downloadLinkElement = ref(null)
+
+function saveData() {
+  const data = JSON.stringify({
+    wrapData: store.wrapData,
+    currentTemplateId: store.currentTemplateId
+  })
+  const blob = new Blob([data], { type: "application\/json" })
+  const url = URL.createObjectURL(blob)
+  downloadLinkElement.value.href = url
+  downloadLinkElement.value.download = "meigen" + getNowYMDhmsStr() + ".json"
+  downloadLinkElement.value.click()
+}
 </script>
 
 <template>
-  <div class="d-flex flex-column d-print-block">
+  <div class="d-flex flex-column d-print-block overflow-hidden">
     <div class="topBar bg-dark text-light row align-items-center g-0 d-print-none shadow z-3">
       <div class="col d-flex align-items-center">
         <div class="mx-2">名言カレンダー</div>
@@ -83,11 +99,11 @@ const showControls = ref(true)
         </button>
       </div>
       <div class="col d-flex align-items-center justify-content-end p-0">
-        <button type="button" class="btn btn-dark me-1"
+        <button type="button" class="btn btn-dark me-1" @click="saveData()"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
           保存
         </button>
-        <button type="button" class="btn btn-dark me-1"
+        <button type="button" class="btn btn-dark me-1" @click="openModal('load')"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
           読み込み
         </button>
@@ -102,9 +118,11 @@ const showControls = ref(true)
       </div>
     </div>
     <div class="mainContents d-flex d-print-block">
-      <div class="viewer overflow-auto flex-fill text-center d-print-block">
-        <div class="d-inline-block viewerContents d-print-block" ref="viewer">
-          <component :is="store.getCurrentTemplateComponent()" />
+      <div class="minWidth0 flex-fill d-flex flex-column">
+        <div class="viewer overflow-auto text-center d-print-block">
+          <div class="d-inline-block viewerContents d-print-block">
+            <component :is="store.getCurrentTemplateComponent()" />
+          </div>
         </div>
       </div>
       <div v-show="showControls" class="controls bg-light d-print-none flex-shrink-0 shadow z-2">
@@ -121,14 +139,16 @@ const showControls = ref(true)
     </div>
   </div>
   <Modal name="print" v-model="modalObjects" modalTitle="印刷" :buttons="{
-    'キャンセル': { buttonType: 'secondary', func: null },
-    '印刷': { buttonType: 'primary', func: print }
-  }">
+              'キャンセル': { buttonType: 'secondary', func: null },
+              '印刷': { buttonType: 'primary', func: print }
+            }">
     <p>下記の設定で印刷してください。</p>
     <ul>
       <li v-for="item in store.getCurrentTemplatePrintOptions()">{{ item }}</li>
     </ul>
   </Modal>
+  <DataLoader v-model="modalObjects" />
+  <a ref="downloadLinkElement" style="display: none;"></a>
 </template>
 
 <style scoped>
@@ -140,10 +160,15 @@ const showControls = ref(true)
   .mainContents {
     width: 100vw;
     height: calc(100vh - 40px);
+    background-color: lightgray;
+  }
+
+  .minWidth0 {
+    min-width: 0;
+    position: relative;
   }
 
   .viewer {
-    background-color: lightgray;
     scroll-behavior: smooth;
   }
 

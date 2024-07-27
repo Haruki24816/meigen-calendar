@@ -103,6 +103,13 @@ const store = reactive({
   },
   getOptionArgs(sectionId, optionId) {
     return this.templates[this.currentTemplateId].sections[sectionId].options[optionId].formArgs
+  },
+  loadData(data) {
+    this.wrapData = data.wrapData
+    this.currentTemplateId = data.currentTemplateId
+  },
+  isWrapDataEmpty() {
+    return Object.keys(this.wrapData).length == 0
   }
 })
 
