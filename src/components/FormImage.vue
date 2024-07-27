@@ -46,7 +46,8 @@ function loadData(file) {
     </div>
     <div class="formRightSide">
       <button type="button" class="btn btn-outline-primary btn-sm w-100" @dragover.prevent @drop.prevent="onDrop"
-        @click="inputElement.click()">
+        @click="inputElement.click()"
+        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
         クリックして参照or<br>
         ドラッグアンドドロップ
       </button>
