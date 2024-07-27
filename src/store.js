@@ -3,9 +3,9 @@ import { reactive, shallowRef } from "vue"
 // ↓↓↓
 
 import { desk2024 } from "./templates/desk2024"
-import { dummy } from "./templates/dummy"
+import { wall2024 } from "./templates/wall2024"
 
-const templateList = [desk2024, dummy]
+const templateList = [desk2024, wall2024]
 
 // ↑↑↑
 

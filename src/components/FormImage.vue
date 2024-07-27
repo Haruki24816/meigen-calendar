@@ -47,8 +47,8 @@ function loadData(file) {
     <div class="formRightSide">
       <button type="button" class="btn btn-outline-primary btn-sm w-100" @dragover.prevent @drop.prevent="onDrop"
         @click="inputElement.click()">
-        クリックして参照<br>
-        orドラッグアンドドロップ
+        クリックして参照or<br>
+        ドラッグアンドドロップ
       </button>
     </div>
   </div>

@@ -83,7 +83,7 @@ function copyMonthOptions() {
 
 export const desk2024 = {
   templateId: "desk2024",
-  templateName: "卓上タイプ2024",
+  templateName: "卓上タイプ2024年デザイン",
   printOptions: [
     "用紙：A4縦",
     "印刷倍率：100%",
