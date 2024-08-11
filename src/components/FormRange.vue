@@ -18,6 +18,14 @@ const currentTemplateId = computed(() => {
 watch(currentTemplateId, (newValue, oldValue) => {
   data.value = store.getOptionData(props.sectionId, props.optionId)
 })
+
+const realtimeData = computed(() => {
+  return store.getOptionData(props.sectionId, props.optionId)
+})
+
+watch(realtimeData, (newValue, oldValue) => {
+  data.value = store.getOptionData(props.sectionId, props.optionId)
+})
 </script>
 
 <template>
