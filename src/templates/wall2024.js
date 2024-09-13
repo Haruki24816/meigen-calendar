@@ -1,5 +1,5 @@
 import wall2024Component from "./wall2024Component.vue"
-import FormDummy from "../components/FormDummy.vue"
+import FormBool from "../components/FormBool.vue"
 
 export const wall2024 = {
   templateId: "wall2024",
@@ -10,14 +10,13 @@ export const wall2024 = {
   component: wall2024Component,
   sections: {
     "general": {
-      sectionName: "ダミー",
+      sectionName: "共通データ",
       autoScroll: false,
       options: {
-        "dummy": {
-          optionName: "ダミー",
-          formType: FormDummy,
-          formArgs: { message: "ダミー" },
-          default: null
+        "imposition": {
+          optionName: "面付け",
+          formType: FormBool,
+          default: false
         }
       }
     }
