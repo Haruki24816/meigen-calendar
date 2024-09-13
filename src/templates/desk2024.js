@@ -88,7 +88,8 @@ export const desk2024 = {
     "用紙：A4縦",
     "印刷倍率：100%",
     "余白無し",
-    "背景画像を印刷する"
+    "背景画像を印刷する",
+    "両面印刷「短辺」綴じ"
   ],
   component: desk2024Component,
   sections: {

@@ -23,7 +23,7 @@ onMounted(() => {
         <div class="modal-body">
           <slot></slot>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" v-if="Object.keys(props.buttons).length != 0">
           <template v-for="(value, buttonName) in props.buttons">
             <button v-if="value.buttonType == 'secondary'" type="button" class="btn btn-secondary"
               data-bs-dismiss="modal" @click="value.func">

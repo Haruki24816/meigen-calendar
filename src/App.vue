@@ -99,6 +99,10 @@ function saveData() {
         </button>
       </div>
       <div class="col d-flex align-items-center justify-content-end p-0">
+        <button type="button" class="btn btn-dark me-1" @click="openModal('about')"
+          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+          このアプリについて
+        </button>
         <button type="button" class="btn btn-dark me-1" @click="saveData()"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
           保存
@@ -139,13 +143,16 @@ function saveData() {
     </div>
   </div>
   <Modal name="print" v-model="modalObjects" modalTitle="印刷" :buttons="{
-              'キャンセル': { buttonType: 'secondary', func: null },
-              '印刷': { buttonType: 'primary', func: print }
-            }">
+    'キャンセル': { buttonType: 'secondary', func: null },
+    '印刷': { buttonType: 'primary', func: print }
+  }">
     <p>下記の設定で印刷してください。</p>
     <ul>
       <li v-for="item in store.getCurrentTemplatePrintOptions()">{{ item }}</li>
     </ul>
+  </Modal>
+  <Modal name="about" v-model="modalObjects" modalTitle="このアプリについて" :buttons="{}">
+    <p>それは私にもよくわからないのだ。</p>
   </Modal>
   <DataLoader v-model="modalObjects" />
   <a ref="downloadLinkElement" style="display: none;"></a>
