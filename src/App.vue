@@ -153,6 +153,7 @@ function saveData() {
   </Modal>
   <Modal name="about" v-model="modalObjects" modalTitle="このアプリについて" :buttons="{}">
     <p>それは私にもよくわからないのだ。</p>
+    <p>動作確認：Chrome系のやつ。Firefoxだと縦書きのレイアウトがなんかうまくいかんかった。</p>
   </Modal>
   <DataLoader v-model="modalObjects" />
   <a ref="downloadLinkElement" style="display: none;"></a>
