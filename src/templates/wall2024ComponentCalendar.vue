@@ -33,6 +33,12 @@ function updateHoliday(date, event) {
 
 <template>
   <div class="containerBox">
+    <div class="calendarHeader">
+      <div class="monthNum">{{ props.month }}</div>
+      <div class="monthName">{{ calendar.months[props.month] }}</div>
+      <div class="spacer"></div>
+      <div class="year">{{ year }}</div>
+    </div>
     <div class="calendarTable">
       <div class="day daySun">Sun</div>
       <div class="day">Mon</div>
@@ -42,7 +48,7 @@ function updateHoliday(date, event) {
       <div class="day">Fri</div>
       <div class="day daySat">Sat</div>
       <div v-for="item in calendarArray" :class="item.class">
-        <div>{{ item.date }}</div>
+        <div :class="{ holiday: (getHoliday(item.date) != '') }">{{ item.date }}</div>
         <input type="text" @input="updateHoliday(item.date, $event)" :value="getHoliday(item.date)">
       </div>
     </div>
@@ -52,8 +58,42 @@ function updateHoliday(date, event) {
 <style scoped>
 .containerBox {
   width: 190mm;
-  height: 128.5mm;
+  height: 133.5mm;
   font-family: v-bind("font");
+  display: flex;
+  flex-direction: column;
+}
+
+.calendarHeader {
+  flex-grow: 1;
+  max-height: 25mm;
+  display: flex;
+  align-items: end;
+  color: v-bind("color");
+  padding: 0 5mm 5mm 5mm;
+}
+
+.monthNum {
+  font-size: 40pt;
+  line-height: 100%;
+  font-weight: 800;
+}
+
+.monthName {
+  font-size: 22pt;
+  line-height: 100%;
+  margin-left: 4mm;
+  letter-spacing: 0.5mm;
+  font-weight: bold;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.year {
+  font-size: 24pt;
+  line-height: 100%;
 }
 
 .calendarTable {
@@ -86,11 +126,11 @@ function updateHoliday(date, event) {
 
 .date {
   width: calc(100% / 7);
-  height: 18mm;
+  height: 17mm;
   border-top: 0.3pt v-bind("color") solid;
   border-right: 0.3pt v-bind("color") solid;
   color: v-bind("color");
-  line-height: 9mm;
+  line-height: 8mm;
   font-size: 16pt;
   font-weight: bold;
   letter-spacing: 0.6mm;
@@ -121,6 +161,10 @@ function updateHoliday(date, event) {
 }
 
 .sun {
+  color: #f72922;
+}
+
+.holiday {
   color: #f72922;
 }
 </style>

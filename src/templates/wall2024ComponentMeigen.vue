@@ -45,14 +45,14 @@ const meigenLineHeight = computed(() => {
 <style scoped>
 .containerBox {
   width: 190mm;
-  height: 128.5mm;
-  margin-bottom: 20mm;
+  height: 133.5mm;
+  margin-bottom: 10mm;
   display: flex;
 }
 
 .image {
-  width: 128.5mm;
-  height: 128.5mm;
+  width: 133.5mm;
+  height: 133.5mm;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,8 +66,8 @@ const meigenLineHeight = computed(() => {
 }
 
 .meigen {
-  width: 61.5mm;
-  height: 128.5mm;
+  width: calc(190mm - 133.5mm);
+  height: 133.5mm;
   background-color: v-bind("color");
   padding-top: 3mm;
   padding-bottom: 3mm;
