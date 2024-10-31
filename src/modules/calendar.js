@@ -66,7 +66,7 @@ const calendar = {
     "October",
     "November",
     "December",
-  ]
+  ],
 }
 
 export { calendar }

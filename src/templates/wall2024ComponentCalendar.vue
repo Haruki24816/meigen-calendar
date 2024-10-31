@@ -76,14 +76,14 @@ function updateHoliday(date, event) {
 .monthNum {
   font-size: 40pt;
   line-height: 100%;
-  font-weight: 800;
+  font-weight: bold;
 }
 
 .monthName {
   font-size: 22pt;
   line-height: 100%;
   margin-left: 4mm;
-  letter-spacing: 0.5mm;
+  letter-spacing: 0.4mm;
   font-weight: bold;
 }
 
@@ -133,7 +133,6 @@ function updateHoliday(date, event) {
   line-height: 8mm;
   font-size: 16pt;
   font-weight: bold;
-  letter-spacing: 0.6mm;
   display: flex;
   flex-direction: column;
   padding-top: 0.5mm;
@@ -149,6 +148,7 @@ function updateHoliday(date, event) {
   font-size: 10pt;
   height: 6mm;
   color: #f72922;
+  background-color: #00000000;
 }
 
 .outOfMonth>input {

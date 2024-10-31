@@ -46,7 +46,7 @@ function saveData() {
 <template>
   <div class="d-flex flex-column d-print-block overflow-hidden">
     <div class="topBar bg-dark text-light row align-items-center g-0 d-print-none shadow z-3">
-      <div class="col d-flex align-items-center">
+      <div class="col d-flex align-items-center d-md-none d-lg-flex">
         <div class="mx-2">名言カレンダー</div>
         <div class="dropdown">
           <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -98,7 +98,7 @@ function saveData() {
           <i class="bi bi-plus"></i>
         </button>
       </div>
-      <div class="col d-flex align-items-center justify-content-end p-0">
+      <div class="col d-flex align-items-center justify-content-end p-0 d-md-none d-lg-flex">
         <button type="button" class="btn btn-dark me-1" @click="openModal('about')"
           style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
           このアプリについて
