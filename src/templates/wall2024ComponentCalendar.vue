@@ -59,6 +59,7 @@ function updateHoliday(date, event) {
 .containerBox {
   width: 190mm;
   height: 133.5mm;
+  margin: 5mm 0 0 10mm;
   font-family: v-bind("font");
   display: flex;
   flex-direction: column;

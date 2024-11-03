@@ -2,6 +2,7 @@
 import { store } from "../store"
 import wall2024ComponentMeigen from "./wall2024ComponentMeigen.vue"
 import wall2024ComponentCalendar from "./wall2024ComponentCalendar.vue"
+import wall2024ComponentBackCover from "./wall2024ComponentBackCover.vue"
 </script>
 
 <template>
@@ -59,23 +60,24 @@ import wall2024ComponentCalendar from "./wall2024ComponentCalendar.vue"
       <div>おまけページ下</div>
     </div>
     <div class="sheet">
-      <div>裏表紙</div>
+      <wall2024ComponentBackCover />
       <div>表紙</div>
     </div>
   </template>
   <template v-else>
-    <div class="halfSheet">
-      表紙
+    <div class="sheet">
+      <div>表紙</div>
     </div>
     <div v-for="month in 12" class="sheet">
       <wall2024ComponentMeigen :month="month" />
       <wall2024ComponentCalendar :month="month" />
     </div>
     <div class="sheet">
-      おまけページ
+      <div>おまけページ上</div>
+      <div>おまけページ下</div>
     </div>
-    <div class="halfSheet">
-      裏表紙
+    <div class="sheet">
+      <wall2024ComponentBackCover />
     </div>
   </template>
 </template>
@@ -89,15 +91,6 @@ import wall2024ComponentCalendar from "./wall2024ComponentCalendar.vue"
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
   display: flex;
   flex-direction: column;
-  padding: 10mm;
-}
-
-.halfSheet {
-  background-color: white;
-  width: 210mm;
-  height: 148.5mm;
-  margin: 10mm;
-  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
 }
 
 @media print {

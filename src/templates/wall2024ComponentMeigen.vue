@@ -46,7 +46,7 @@ const meigenLineHeight = computed(() => {
 .containerBox {
   width: 190mm;
   height: 133.5mm;
-  margin-bottom: 10mm;
+  margin: 10mm 0 5mm 10mm;
   display: flex;
 }
 
