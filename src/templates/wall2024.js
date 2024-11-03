@@ -1,5 +1,6 @@
 import { fonts } from "../modules/fonts"
 import defaultImage from "/default.jpg"
+import defaultImage1 from "/default1.png"
 
 import wall2024Component from "./wall2024Component.vue"
 import FormBool from "../components/FormBool.vue"
@@ -102,7 +103,7 @@ export const wall2024 = {
           optionName: "面付け",
           formType: FormBool,
           formArgs: {},
-          default: false
+          default: false,
         },
         "font": {
           optionName: "フォント",
@@ -115,7 +116,19 @@ export const wall2024 = {
           formType: FormNum,
           formArgs: {},
           default: 2024
-        }
+        },
+        "cover": {
+          optionName: "表紙",
+          formType: FormImage,
+          formArgs: {},
+          default: defaultImage1
+        },
+        "omake": {
+          optionName: "広告欄",
+          formType: FormImage,
+          formArgs: {},
+          default: defaultImage1
+        }        
       }
     },
     "wall20241": {

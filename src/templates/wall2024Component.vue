@@ -1,8 +1,12 @@
 <script setup>
 import { store } from "../store"
+import { computed } from "vue"
 import wall2024ComponentMeigen from "./wall2024ComponentMeigen.vue"
 import wall2024ComponentCalendar from "./wall2024ComponentCalendar.vue"
 import wall2024ComponentBackCover from "./wall2024ComponentBackCover.vue"
+
+const coverImageData = computed(() => { return store.getOptionData("general", "cover") })
+const omakeImageData = computed(() => { return store.getOptionData("general", "omake") })
 </script>
 
 <template>
@@ -52,29 +56,29 @@ import wall2024ComponentBackCover from "./wall2024ComponentBackCover.vue"
       <wall2024ComponentCalendar month="12" />
     </div>
     <div class="sheet">
-      <div>おまけページ上</div>
+      <div class="omakeTop"><img :src="omakeImageData"></div>
       <wall2024ComponentCalendar month="1" />
     </div>
     <div class="sheet">
       <wall2024ComponentMeigen month="1" />
-      <div>おまけページ下</div>
+      <div class="omakeBottom"><img :src="omakeImageData"></div>
     </div>
     <div class="sheet">
       <wall2024ComponentBackCover />
-      <div>表紙</div>
+      <div class="cover"><img :src="coverImageData"></div>
     </div>
   </template>
   <template v-else>
     <div class="sheet">
-      <div>表紙</div>
+      <div class="cover"><img :src="coverImageData"></div>
     </div>
     <div v-for="month in 12" class="sheet">
       <wall2024ComponentMeigen :month="month" />
       <wall2024ComponentCalendar :month="month" />
     </div>
     <div class="sheet">
-      <div>おまけページ上</div>
-      <div>おまけページ下</div>
+      <div class="omakeTop"><img :src="omakeImageData"></div>
+      <div class="omakeBottom"><img :src="omakeImageData"></div>
     </div>
     <div class="sheet">
       <wall2024ComponentBackCover />
@@ -91,6 +95,34 @@ import wall2024ComponentBackCover from "./wall2024ComponentBackCover.vue"
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
   display: flex;
   flex-direction: column;
+}
+
+.cover {
+  width: 210mm;
+  height: 148.5mm;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.omakeTop {
+  width: 210mm;
+  height: 148.5mm;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.omakeBottom {
+  width: 210mm;
+  height: 148.5mm;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.cover>img, .omakeTop>img, .omakeBottom>img {
+  width: 100%;
 }
 
 @media print {
